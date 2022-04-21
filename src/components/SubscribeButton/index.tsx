@@ -3,6 +3,7 @@ import styles from "./styles.module.scss";
 import { useSession, signIn } from "next-auth/react";
 import { api } from "../../services/api";
 import { getStripeJs } from "../../services/stripejs";
+import { useRouter } from "next/router";
 
 interface SubscribeButtonProps {
   productId: string;
@@ -10,10 +11,16 @@ interface SubscribeButtonProps {
 
 export function SubscribeButton({ productId }: SubscribeButtonProps) {
   const sessio = useSession();
+  const { push } = useRouter();
 
   async function handleSubscribe() {
     if (sessio.status !== "authenticated") {
       signIn("github");
+      return;
+    }
+
+    if (sessio.activeSubscription) {
+      push("/posts");
       return;
     }
 
