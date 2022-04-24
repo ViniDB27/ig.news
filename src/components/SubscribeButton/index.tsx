@@ -9,20 +9,20 @@ interface SubscribeButtonProps {
   productId: string;
 }
 
-export function SubscribeButton({ productId }: SubscribeButtonProps) {
-  const sessio = useSession();
+export function SubscribeButton() {
+  const {status, data} = useSession();
   const { push } = useRouter();
 
   async function handleSubscribe() {
-    if (sessio.status !== "authenticated") {
+    if (status !== "authenticated") {
       signIn("github");
       return;
     }
 
-    if (sessio.activeSubscription) {
-      push("/posts");
-      return;
-    }
+    // if (!data?.user) {
+    //   push("/posts");
+    //   return;
+    // }
 
     //checkout session
     try {

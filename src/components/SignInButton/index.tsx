@@ -5,18 +5,14 @@ import { FiX } from "react-icons/fi";
 import { signIn, useSession, signOut } from "next-auth/react";
 
 export function SignInButton() {
-  const session = useSession();
+  const { status, data } = useSession();
 
-  console.log(session)
-
-  const isUserLoggedIn = session.status === "authenticated";
+  const isUserLoggedIn = status === "authenticated";
 
   return isUserLoggedIn ? (
-    <button
-      onClick={() => signOut()}
-    className={styles.signInButtons}>
+    <button onClick={() => signOut()} className={styles.signInButtons}>
       <FaGithub color="#04d361" />
-      {session.data.user.name}
+      {data.user.name}
       <FiX className={styles.closeIcon} color="#737380" />
     </button>
   ) : (

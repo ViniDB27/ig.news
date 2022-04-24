@@ -7,7 +7,7 @@ import styles from "./home.module.scss";
 interface HomeProps {
   product: {
     productId: string;
-    amount: number;
+    amount: string;
   };
 }
 
@@ -33,12 +33,12 @@ export default function Home({ product }: HomeProps) {
               {new Intl.NumberFormat("en-US", {
                 style: "currency",
                 currency: "USD",
-              }).format(amount)}{" "}
+              }).format(Number(amount))}{" "}
               month
             </span>
           </p>
 
-          <SubscribeButton productId={productId} />
+          <SubscribeButton />
         </section>
 
         <img src="/images/avatar.svg" alt="Girl coding" />
